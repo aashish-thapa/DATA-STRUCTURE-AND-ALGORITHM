@@ -25,27 +25,35 @@ Output: [0,2]
 Example 3:
 */
 
-#include <vector>
+#include <iostream>
 #include <unordered_map>
+#include <vector>
 using namespace std;
 
-class Solution {
-public:
-    vector<int> twoSum(vector<int>& nums, int target) {
-        unordered_map<int, int> numToIndex;  // Map to store number and its index
+class Solution{
+  public:
+    vector<int> twoSum(vector<int>& nums, int target){
+        unordered_map<int, int> numToIndex;
         
-        for (int i = 0; i < nums.size(); i++) {
-            int complement = target - nums[i];  // Calculate the required complement
+        for(int i = 0; i<nums.size(); i++){
+            int complement = target - nums[i];
             
-            // Check if complement is already in the map
-            if (numToIndex.find(complement) != numToIndex.end()) {
-                return {numToIndex[complement], i};  // Return indices in order
+            
+            if (numToIndex.find(complement) != numToIndex.end()){
+                return {numToIndex[complement], i};
+                
             }
-            
-            // Store the current number with its index
             numToIndex[nums[i]] = i;
+                
         }
-        
-        return {};  // Default return (shouldn't be reached with guaranteed solution)
+        return {};
     }
 };
+
+int main(){
+    vector<int> nums = {4 , 5, 6};
+    int target = 10;
+    Solution s1;
+    vector<int> results = s1.twoSum(nums, target);
+    cout<<"{ "<<results[0]<< ", " << results[1]<<"}";
+}
