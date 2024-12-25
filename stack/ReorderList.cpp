@@ -8,6 +8,7 @@
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
+#include <iostream>
 class Solution {
 public:
     void reorderList(ListNode* head) {
