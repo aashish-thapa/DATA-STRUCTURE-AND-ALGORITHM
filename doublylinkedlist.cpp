@@ -45,9 +45,111 @@ Node* insertAtBegin(Node* head, int data){
     if(head != nullptr){
         head->prev = newNode;
     }
-    return newNode->next;
+    return newNode;
+}
+Node* insertAtLast(Node* head, int data){
+    Node* newNode = new Node(data);
+    Node* curr = head;
+    while(curr != nullptr && curr->next != nullptr){
+        curr = curr->next;
+    }
+    curr->next = newNode;
+    newNode->next = nullptr;
+    newNode->prev = curr;
+    
+    return head;
 }
 
+Node* insertAt(Node* head, int data, int position){
+    Node* newNode = new Node(data);
+    if(position < 0 ){
+        return head ;
+    }
+    if(position == 1){
+        newNode->next = head;
+        if(head!= nullptr){
+            head->prev = newNode;
+        }
+    }
+    Node* curr = head;
+    int i = 1;
+    while(curr != nullptr and i < position - 1){
+        
+        curr = curr->next;
+        i++;
+    }
+    if(curr == nullptr){
+        cout<<"Out of the bound";
+        delete newNode;
+        return head;
+    }
+    
+    newNode->prev = curr;
+    newNode->next = curr->next;
+    curr->next = newNode;
+    
+    if (newNode->next != nullptr){
+        newNode->next->prev = newNode;
+    }
+    return head;
+}
+Node* deleteAtBegin(Node* head){
+    Node* temp = head;
+    if(head == nullptr){
+        return head;
+    }
+    else{
+    head = head->next;
+    }
+    delete temp;
+    return head;
+    
+    
+}
+Node* deleteAtEnd(Node* head){
+    Node* curr = head;
+    while(curr != nullptr && curr->next->next != nullptr){
+        curr = curr -> next;
+    }
+    Node* nodeToDlt = curr -> next;
+    curr -> next = nodeToDlt -> next;
+    if(nodeToDlt -> next != nullptr){
+        nodeToDlt -> next -> prev = curr;
+    }
+    delete nodeToDlt;
+    return head;
+}
+Node* deleteAtPosition(Node* head, int position){
+    
+    if(position < 1){
+        cout << "Empty";
+        
+    }
+    if(position == 1){
+        delete head;
+        head->next = nullptr;
+    }
+    Node* curr = head;
+    int i = 1;
+    while(curr != nullptr && i < position - 1){
+        curr = curr-> next;
+        i++;
+    }
+    Node* NodeToDlt = curr -> next;
+    curr -> next = NodeToDlt -> next;
+    if(NodeToDlt -> next != nullptr){
+        NodeToDlt -> next -> prev = curr;
+    }
+    delete NodeToDlt;
+    return head;
+}
+void print(Node* head){
+    Node* curr = head;
+    while(curr != nullptr){
+        cout << curr -> data << " ";
+        curr = curr -> next;
+    }
+}
 int main() {
     // Write C++ code here
     Node* head = new Node(1);
@@ -66,6 +168,5 @@ int main() {
     cout << endl;
     cout << "The size of the linklist is " << returnCount(head);
     cout << endl;
-    cout << insertAtBegin(head, 5);
-    return 0;
+    print(deleteAtPosition(head, 2));
 }
