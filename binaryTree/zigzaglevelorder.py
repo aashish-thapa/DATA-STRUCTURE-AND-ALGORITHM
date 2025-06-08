@@ -1,4 +1,5 @@
 from typing import List, Optional
+from collections import deque
 class Node:
     def __init__(self, value: int):
         self.value = value
@@ -9,37 +10,57 @@ class Solution:
     def zigzagLevelOrder(self, root: Optional(Node)) -> List[List[int]]:
 
 
+        # if not root:
+        #     return []
+        
+        # res  = []
+        # s1 = [root]
+        # s2 = []
+
+        # while s1 or s1:
+        #     level = []
+        #     while s1:
+        #         curr = s1.pop()
+        #         level.append(curr.value)
+        #         if curr.left:
+        #             s2.append(curr.left)
+        #         if curr.right:
+        #             s2.append(curr.right)
+
+        #     if level:
+        #         res.append(level)
+
+        #     level = []
+        #     while s2:
+        #         curr = s2.pop();
+        #         level.append(curr.value)
+        #         if curr.right:
+        #             s1.append(curr.right)
+        #         if curr.left:
+        #             s1.append(curr.left)
+        #     if level:
+        #         res.append(level)
+        # return res
+
+
         if not root:
             return []
-        
-        res  = []
-        s1 = [root]
-        s2 = []
+        res = []
+        queue = deque([root])
 
-        while s1 or s1:
+        while queue:
             level = []
-            while s1:
-                curr = s1.pop()
-                level.append(curr.value)
-                if curr.left:
-                    s2.append(curr.left)
-                if curr.right:
-                    s2.append(curr.right)
+            root = queue.popleft()
+            level.append(root.value)
 
-            if level:
-                res.append(level)
+            if root.left:
+                queue.append(root.left)
+            if root.right:
+                queue.append(root.right)
+            res.append(level)
 
-            level = []
-            while s2:
-                curr = s2.pop();
-                level.append(curr.value)
-                if curr.right:
-                    s1.append(curr.right)
-                if curr.left:
-                    s1.append(curr.left)
-            if level:
-                res.append(level)
         return res
+    
 if __name__ == "__main__":
     # Example usage
     root = Node(1)
